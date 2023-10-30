@@ -1,0 +1,56 @@
+﻿@model List<Envelope>
+
+<h1>Signed Documents</h1>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+    <div class="container-fluid">
+        <div>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="btn btn-primary me-2" asp-controller="Home" asp-action="Sign">Sign New Document</a>
+                </li>
+                <li class="nav-item">
+                    <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Validate">
+                        <div class="form-group">
+                            <input type="file" class="form-control-file" id="file" accept=".pdf" name="file">
+                            <button type="submit" class="btn btn-primary">Validate Signature Hash</button>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<table class="table mt-5">
+    <thead>
+        <tr>
+            <th scope="col">Document ID</th>
+            <th scope="col">Signature Hash</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+@if (Model.Count == 0)
+{
+    <tr>
+        <td colspan="3">No signed documents available.</td>
+    </tr>
+}
+else
+{
+foreach (var envelope in Model)
+{
+    <tr>
+        <th scope="row">@envelope.DocumentId</th>
+        <td>@envelope.SignatureHash</td>
+        <td><a class="btn btn-primary" asp-route-id="@envelope.DocumentId" asp-controller="Home" asp-action="Download">Download</a>
+        </td>
+    </tr>
+}
+}
+      
+    </tbody>
+</table>

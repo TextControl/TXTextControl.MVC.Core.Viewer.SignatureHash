@@ -1,0 +1,32 @@
+﻿@using TXTextControl.Web.MVC.DocumentViewer
+@using System.Text
+	        
+<div style="width: 800px; height: 600px;">
+	    
+@Html.TXTextControl().DocumentViewer(settings => {
+	settings.DocumentPath = "App_Data/Documents/lease_agreement.tx";
+	settings.Dock = DocumentViewerSettings.DockStyle.Fill;
+	settings.SignatureSettings = new SignatureSettings {
+		ShowSignatureBar = true,
+		RedirectUrlAfterSignature = this.Url.Action("ProcessSignature", "Home", null, Context.Request.Scheme, null),
+		UniqueId = Guid.NewGuid().ToString(),
+	};
+}).Render()
+	    
+</div>
+	
+<script>
+
+	window.addEventListener("documentViewerLoaded", function () {
+		TXDocumentViewer.signatures.setSubmitCallback(signatureComplete);
+	});
+
+	function signatureComplete(e) {
+		if (e === "true")
+			// redirect to the signature process action
+			window.location.href = "/Home/Index"; 
+        else
+            alert("Signature failed.");
+	}
+	
+</script>

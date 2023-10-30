@@ -1,0 +1,18 @@
+﻿@model bool
+
+@if(Model)
+{
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Signature Hash is Valid!</h4>
+        <p>Signature Hash is valid and matches the document.</p>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Signature Hash is Invalid!</h4>
+        <p>Signature Hash is invalid and does not match the document.</p>
+    </div>
+}
+
+<a class="btn btn-primary" asp-controller="Home" asp-action="Index">Return to Home</a>
